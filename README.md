@@ -27,5 +27,11 @@ SO THAT I can keep up-to-date with current events and plan my day efficiently.
 
 * HTML
 * CSS
+** Styling
+** Framework
+** Responsiveness (Mobile-First)
 * JavaScript
-* AJAX/API's
+** Events
+** News
+** Weather
+** To-Do List
