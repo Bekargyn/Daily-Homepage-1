@@ -25,13 +25,13 @@ SO THAT I can keep up-to-date with current events and plan my day efficiently.
 
 ## ROUGH BREAKDOWN OF TASKS
 
-* HTML
-* CSS
-** Styling
-** Framework
-** Responsiveness (Mobile-First)
-* JavaScript
-** Events
-** News
-** Weather
-** To-Do List
+1. HTML
+2. CSS
+* Styling
+* Framework
+* Responsiveness (Mobile-First)
+3. JavaScript
+* Events
+* News
+* Weather
+* To-Do List
