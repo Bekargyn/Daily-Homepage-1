@@ -45,3 +45,8 @@ $.ajax({
 });
 
 // END NEWS JAVASCRIPT
+
+// TOMTOM's API key
+const eventApiKey = "kecAu5C3f80LkEgYXGQvZgfLk0dpZGE4";
+// Ticketmaster's API key utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb
+
