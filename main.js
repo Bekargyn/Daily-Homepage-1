@@ -1,25 +1,34 @@
 // BEGIN NEWS JAVASCRIPT
 
 // Create variable to hold news API call
-var queryURL =
-  "https://newsapi.org/v2/top-headlines?" +
-  "country=us&" +
-  "apiKey=95e634b5d6494d2daacb34c392508b43";
+var queryURL = 'https://newsapi.org/v2/top-headlines?' +
+  'country=us&' +
+  'apiKey=95e634b5d6494d2daacb34c392508b43';
 
 // Creating an AJAX call for news API
 $.ajax({
   url: queryURL,
   method: "GET"
-}).then(function(response) {
-  // console.log(response);
+}).then(function (response) {
+  console.log(response);
+
+  // Create a container for the articles
+  var articleContainer = $("<div id='articleContainer'>");
+  articleContainer.css("width", "300px");
+
+  // Append article container to body
+  $("body").append(articleContainer);
 
   // Loop through the array of articles
   for (var i = 0; i < response.articles.length; i++) {
-    // Create div for article
-    var articleDiv = $("<div class='article'>");
 
-    // Append article div to body
-    $("body").append(articleDiv);
+    // Create div for article
+    var articleButton = $("<button class='article'>");
+    articleButton.attr("href", response.articles[i].url)
+
+    // Append article div to article container
+    articleContainer.append(articleButton);
+    articleButton.css("border-style", "solid");
 
     // Store article title in a variable
     var title = response.articles[i].title;
@@ -28,17 +37,23 @@ $.ajax({
     pTitle = $("<p>").text(title);
 
     // Append title element to article div
-    articleDiv.append(pTitle);
+    articleButton.append(pTitle);
 
     // Store article image URL in a variable
     var imgURL = response.articles[i].urlToImage;
 
     // Create an element to hold the image
     var image = $("<img>").attr("src", imgURL);
+    image.css("height", "100px");
 
     // Append the image element to the title element
     pTitle.append(image);
   }
+  $(document).on('click', 'button', function (e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    window.open(url, '_blank');
+  });
 });
 
 // END NEWS JAVASCRIPT
@@ -60,13 +75,13 @@ $.ajax({
     "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=Austin",
   async: true,
   dataType: "json",
-  success: function(json) {
+  success: function (json) {
     console.log(json);
     // Parse the response.
     // Do other things.
   },
 
-  error: function(xhr, status, err) {
+  error: function (xhr, status, err) {
     console.log("error", status);
     // This time, we do not end up here!
   }
@@ -81,7 +96,7 @@ function renderWeather(forecast) {
   var j = 0;
   $("#current-city-weather").html("");
   $("#fivedayforecast").html("");
-  $.each(forecast, function(index, el) {
+  $.each(forecast, function (index, el) {
     if (j) {
       renderListItem(el);
     } else {
@@ -97,8 +112,8 @@ function renderListItem(el) {
   listItem.append("<h3>" + moment.unix(el.dt).format("MM/DD/YYYY") + "</h3>");
   listItem.append(
     "<img width='32' src='http://openweathermap.org/img/wn/" +
-      el.weather[0].icon +
-      "@2x.png'>"
+    el.weather[0].icon +
+    "@2x.png'>"
   );
   listItem.append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
@@ -110,12 +125,12 @@ function renderListItem(el) {
 function renderCurrentItem(el) {
   $("#current-city-weather").append(
     "<h1>" +
-      currentLocation.city +
-      " (" +
-      moment.unix(el.dt).format("MM/DD/YYYY") +
-      ") <img width='32' src='http://openweathermap.org/img/wn/" +
-      el.weather[0].icon +
-      "@2x.png'></h1>"
+    currentLocation.city +
+    " (" +
+    moment.unix(el.dt).format("MM/DD/YYYY") +
+    ") <img width='32' src='http://openweathermap.org/img/wn/" +
+    el.weather[0].icon +
+    "@2x.png'></h1>"
   );
   $("#current-city-weather").append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
@@ -135,10 +150,10 @@ function getForecast(currentLocation) {
     url: url,
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function(forecast) {
+    success: function (forecast) {
       var currentForecast = {};
       console.log(forecast);
-      forecast.list.forEach(function(el) {
+      forecast.list.forEach(function (el) {
         if (
           currentForecast.hasOwnProperty(
             moment.unix(el.dt).format("MM/DD/YYYY")
@@ -160,7 +175,7 @@ function getCurrentCityAndCountry() {
     url: "https://geolocation-db.com/jsonp",
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function(location) {
+    success: function (location) {
       console.log(location);
       currentLocation = location;
       getForecast(location);
