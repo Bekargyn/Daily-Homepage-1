@@ -1,68 +1,67 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Daily Homepage</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Daily Homepage</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <body>
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            My Daily Homepage
+          </h1>
+          <p class="subtitle">
+            A place for all your needs
+          </p>
+        </div>
+      </div>
+    </section>
 
-<body>
-  <section class="hero is-primary">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title">
-          My Daily Homepage
-        </h1>
-        <p class="subtitle">
-          A place for all your needs
+    <div class="weathercolumn" id="weather">
+      <h2><strong>Weather</strong></h2>
+    </div>
+
+    <div class="columns">
+      <div class="column is-one-third" id="eventscontainer">
+        <strong>Events</strong>
+      </div>
+      <div class="column is-one-third">
+        <strong>To-Do List</strong>
+        <br />
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias
+          harum aliquid optio voluptate est sit facere, autem eveniet dolores
+          accusamus sunt consequuntur obcaecati neque asperiores itaque. Eos ad
+          corrupti unde. Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Illum modi, autem placeat accusamus tempore obcaecati fugit
+          inventore quos laudantium, dolorem laborum repellendus porro mollitia
+          nam est enim nostrum iusto praesentium. Lorem ipsum dolor sit, amet
+          consectetur adipisicing elit. Rem molestiae tenetur, assumenda,
+          aspernatur facere deserunt nobis nostrum, aperiam veniam ullam modi.
+          Fugiat, sequi magni! Quas neque deleniti nobis odit eveniet.
         </p>
       </div>
+      <div class="column is-one-third" id="articleContainer">
+        <strong>News Headlines</strong>
+      </div>
     </div>
-  </section>
-  
-  <div class="weathercolumn">
-      <h2><strong>Weather</strong></h2>
-      <br>
-      <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis ad quasi possimus quaerat? Repudiandae incidunt eveniet repellat ut! Modi, aliquid vel! Saepe laboriosam tempora cupiditate incidunt aliquam magni ut veniam!
-      </p>
-  </div>
-  
-  
-  
-  <div class="columns">
-    <div class="column is-one-third">
-      <strong>Events</strong>
-      <br>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae fugiat corporis vel doloribus aliquid
-        cupiditate delectus asperiores veniam harum consequuntur, neque dolores qui odio! Ullam aspernatur aliquam hic
-        animi nam.</p>
+    <div class="footer">
+      <p>BekAndTheHeartbreakers</p>
     </div>
-    <div class="column is-one-third">
-      <strong>To-Do List</strong>
-      <br>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias harum aliquid optio voluptate est sit
-        facere, autem eveniet dolores accusamus sunt consequuntur obcaecati neque asperiores itaque. Eos ad corrupti
-        unde. Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum modi, autem placeat accusamus tempore
-        obcaecati fugit inventore quos laudantium, dolorem laborum repellendus porro mollitia nam est enim nostrum iusto
-        praesentium. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem molestiae tenetur, assumenda,
-        aspernatur facere deserunt nobis nostrum, aperiam veniam ullam modi. Fugiat, sequi magni! Quas neque deleniti
-        nobis odit eveniet.</p>
-    </div>
-    <div class="column is-one-third" id="articleContainer">
-      <strong>News Headlines</strong>
-    </div>
-  </div>
-  <div class="footer">
-    <p>BekAndTheHeartbreakers</p>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script type="text/javascript" src="main.js"></script>
-</body>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
 </html>

@@ -1,15 +1,16 @@
 // BEGIN NEWS JAVASCRIPT
 
 // Create variable to hold news API call
-var queryURL = 'https://newsapi.org/v2/top-headlines?' +
-  'country=us&' +
-  'apiKey=95e634b5d6494d2daacb34c392508b43';
+var queryURL =
+  "https://newsapi.org/v2/top-headlines?" +
+  "country=us&" +
+  "apiKey=95e634b5d6494d2daacb34c392508b43";
 
 // Creating an AJAX call for news API
 $.ajax({
   url: queryURL,
   method: "GET"
-}).then(function (response) {
+}).then(function(response) {
   // console.log(response);
 
   // // Create a container for the articles
@@ -20,11 +21,10 @@ $.ajax({
   // $("body").append(articleContainer);
 
   // Loop through the array of articles
-  for (var i = 0; i < response.articles.length; i++) {
-
+  for (var i = 0; i < 10; i++) {
     // Create button for article
     var articleButton = $("<button class='article'>");
-    articleButton.attr("href", response.articles[i].url)
+    articleButton.attr("href", response.articles[i].url);
 
     // Append article button to article container
     $("#articleContainer").append(articleButton);
@@ -51,46 +51,69 @@ $.ajax({
     pTitle.append("<br>");
     pTitle.append(image);
   }
-  $(document).on('click', 'button', function (e) {
+  $(document).on("click", "button", function(e) {
     e.preventDefault();
-    var url = $(this).attr('href');
-    window.open(url, '_blank');
+    var url = $(this).attr("href");
+    window.open(url, "_blank");
   });
 });
 
-// END NEWS JAVASCRIPT
+// END NEWS JAVASCRIPt
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// EVENTS JAVASCRIPT
 
 // Ticketmaster's API key utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
-var eventURL =
-  "https://app.ticketmaster.com/discovery-feed/v2/events.json?apikey=" +
-  ticketMasterApi +
-  "&countryCode=US";
+function getEventsInCity(city) {
+  console.log(city);
+  $.ajax({
+    type: "GET",
+    url:
+      "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=" +
+      city,
+    async: true,
+    dataType: "json",
+    success: function(json) {
+      console.log(json);
+    },
 
-// Creating an AJAX call for news API
-$.ajax({
-  type: "GET",
-  url:
-    "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=Austin",
-  async: true,
-  dataType: "json",
-  success: function (json) {
-    console.log(json);
-    // Parse the response.
-    // Do other things.
-  },
+    error: function(xhr, status, err) {
+      console.log("error", status);
+    }
+  }).then(function(response) {
+    for (var i = 0; i < response._embedded.events.length; i++) {
+      var eventBtn = $("<button class='article'>");
+      var title = response._embedded.events[i].name;
 
-  error: function (xhr, status, err) {
-    console.log("error", status);
-    // This time, we do not end up here!
-  }
-});
+      $("#eventscontainer").append(eventBtn);
+      // eventBtn.attr("href", response._embedded.events[i].url);
+      var date = response._embedded.events[i].dates.start.localDate;
+      var buyTicket = response._embedded.events[i].url;
+      var pTitle = $("<p>").text(title);
+      var link = $("<a>")
+        .text("Buy tickets")
+        .attr("href", buyTicket)
+        .attr("target", "_blank");
+      var imgURL = response._embedded.events[i].images[0].url;
+      var image = $("<img>").attr("src", imgURL);
+      image.css("height", "100px");
+      pTitle.append(link);
+      pTitle.append("<br>");
+      pTitle.append(date);
+      pTitle.append("<br>");
+      pTitle.append(image);
+      eventBtn.append(pTitle);
+    }
+  });
+}
 
-//  #######################################
 //  Weather and Date
+
+/*
+setInterval(function() {
+  $(".weathercolumn").html(moment().format("h:mm:ss a"));
+}, 1000);*/
 
 const apiKey = "7bb4b8b4c54f73c9621bee4e6c4a3bf9";
 
@@ -98,7 +121,7 @@ function renderWeather(forecast) {
   var j = 0;
   $("#current-city-weather").html("");
   $("#fivedayforecast").html("");
-  $.each(forecast, function (index, el) {
+  $.each(forecast, function(index, el) {
     if (j) {
       renderListItem(el);
     } else {
@@ -114,8 +137,8 @@ function renderListItem(el) {
   listItem.append("<h3>" + moment.unix(el.dt).format("MM/DD/YYYY") + "</h3>");
   listItem.append(
     "<img width='32' src='http://openweathermap.org/img/wn/" +
-    el.weather[0].icon +
-    "@2x.png'>"
+      el.weather[0].icon +
+      "@2x.png'>"
   );
   listItem.append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
@@ -125,21 +148,19 @@ function renderListItem(el) {
 }
 
 function renderCurrentItem(el) {
-  $("#current-city-weather").append(
+  $("#weather").append(
     "<h1>" +
-    currentLocation.city +
-    " (" +
-    moment.unix(el.dt).format("MM/DD/YYYY") +
-    ") <img width='32' src='http://openweathermap.org/img/wn/" +
-    el.weather[0].icon +
-    "@2x.png'></h1>"
+      currentLocation.city +
+      " (" +
+      moment.unix(el.dt).format("MM/DD/YYYY") +
+      ") <img width='32' src='http://openweathermap.org/img/wn/" +
+      el.weather[0].icon +
+      "@2x.png'></h1>"
   );
-  $("#current-city-weather").append(
+  $("#weather").append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
   );
-  $("#current-city-weather").append(
-    "<p>Humidity: " + el.main.humidity + "%</p>"
-  );
+  $("#weather").append("<p>Humidity: " + el.main.humidity + "%</p>");
 }
 
 function getForecast(currentLocation) {
@@ -152,10 +173,10 @@ function getForecast(currentLocation) {
     url: url,
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function (forecast) {
+    success: function(forecast) {
       var currentForecast = {};
       console.log(forecast);
-      forecast.list.forEach(function (el) {
+      forecast.list.forEach(function(el) {
         if (
           currentForecast.hasOwnProperty(
             moment.unix(el.dt).format("MM/DD/YYYY")
@@ -177,7 +198,7 @@ function getCurrentCityAndCountry() {
     url: "https://geolocation-db.com/jsonp",
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function (location) {
+    success: function(location) {
       console.log(location);
       currentLocation = location;
       getForecast(location);
@@ -200,3 +221,4 @@ function convertKelvinToFarenheit(kelvin) {
 }
 
 getCurrentCityAndCountry();
+getEventsInCity("Austin");
