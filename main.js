@@ -11,15 +11,24 @@ $.ajax({
   url: queryURL,
   method: "GET"
 }).then(function(response) {
-  // console.log(response);
+  console.log(response);
+
+  // Create a container for the articles
+  var articleContainer = $("<div id='articleContainer'>");
+  articleContainer.css("width", "300px");
+
+  // Append article container to body
+  $("body").append(articleContainer);
 
   // Loop through the array of articles
   for (var i = 0; i < response.articles.length; i++) {
     // Create div for article
-    var articleDiv = $("<div class='article'>");
+    var articleButton = $("<button class='article'>");
+    articleButton.attr("href", response.articles[i].url);
 
-    // Append article div to body
-    $("body").append(articleDiv);
+    // Append article div to article container
+    articleContainer.append(articleButton);
+    articleButton.css("border-style", "solid");
 
     // Store article title in a variable
     var title = response.articles[i].title;
@@ -28,51 +37,34 @@ $.ajax({
     pTitle = $("<p>").text(title);
 
     // Append title element to article div
-    articleDiv.append(pTitle);
+    articleButton.append(pTitle);
 
     // Store article image URL in a variable
     var imgURL = response.articles[i].urlToImage;
 
     // Create an element to hold the image
     var image = $("<img>").attr("src", imgURL);
+    image.css("height", "100px");
 
     // Append the image element to the title element
     pTitle.append(image);
   }
+  $(document).on("click", "button", function(e) {
+    e.preventDefault();
+    var url = $(this).attr("href");
+    window.open(url, "_blank");
+  });
 });
 
-// END NEWS JAVASCRIPT
+// END NEWS JAVASCRIPt
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// EVENTS JAVASCRIPT
 
 // Ticketmaster's API key utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
-var eventURL =
-  "https://app.ticketmaster.com/discovery-feed/v2/events.json?apikey=" +
-  ticketMasterApi +
-  "&countryCode=US";
-
-// Creating an AJAX call for news API
-$.ajax({
-  type: "GET",
-  url:
-    "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=Austin",
-  async: true,
-  dataType: "json",
-  success: function(json) {
-    console.log(json);
-    // Parse the response.
-    // Do other things.
-  },
-
-  error: function(xhr, status, err) {
-    console.log("error", status);
-    // This time, we do not end up here!
-  }
-});
-/*
 function getEventsInCity(city) {
+  console.log(city);
   $.ajax({
     type: "GET",
     url:
@@ -82,19 +74,37 @@ function getEventsInCity(city) {
     dataType: "json",
     success: function(json) {
       console.log(json);
-      // Parse the response.
-      // Do other things.
     },
 
     error: function(xhr, status, err) {
       console.log("error", status);
-      // This time, we do not end up here!
+    }
+  }).then(function(response) {
+    for (var i = 0; i < response._embedded.events.length; i++) {
+      var articleDiv = $("<button class='article'>");
+      var title = response._embedded.events[i].name;
+      var date = response._embedded.events[i].dates.start.localDate;
+      var buyTicket = response._embedded.events[i].url;
+      var pTitle = $("<p>").text(title);
+      var link = $("<a>")
+        .text("Buy tickets")
+        .attr("href", buyTicket)
+        .attr("target", "_blank");
+      var imgURL = response._embedded.events[i].images[0].url;
+      var image = $("<img>").attr("src", imgURL);
+      image.css("height", "100px");
+      pTitle.append(link);
+      pTitle.append("<br>");
+      pTitle.append(date);
+      pTitle.append("<br>");
+
+      pTitle.append(image);
+      articleDiv.append(pTitle);
+      $("body").append(articleDiv);
     }
   });
 }
-*/
 
-//  #######################################
 //  Weather and Date
 
 const apiKey = "7bb4b8b4c54f73c9621bee4e6c4a3bf9";
@@ -205,3 +215,4 @@ function convertKelvinToFarenheit(kelvin) {
 }
 
 getCurrentCityAndCountry();
+getEventsInCity("Austin");
