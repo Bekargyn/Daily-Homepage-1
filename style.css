@@ -4,3 +4,30 @@
 .subtitle {
     text-align: center;
 }
+.columns {
+    margin-top: 100px;
+    text-align: center;
+}
+.columns {
+        border: 15px solid black;
+        padding: 50px;
+        margin: 20px;
+        height: auto;
+        clear: both;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: turquoise;
+    color: white;
+    text-align: center;
+    padding: 1%;
+ }
+ .weathercolumn {
+     text-align: center;
+     border: 15px solid black;
+     padding: 50px;
+     margin: 20px;
+ }

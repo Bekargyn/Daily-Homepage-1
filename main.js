@@ -10,24 +10,34 @@ var queryURL =
 $.ajax({
   url: queryURL,
   method: "GET"
+<<<<<<< HEAD
 }).then(function(response) {
   console.log(response);
+=======
+}).then(function (response) {
+  // console.log(response);
+>>>>>>> master
 
-  // Create a container for the articles
-  var articleContainer = $("<div id='articleContainer'>");
-  articleContainer.css("width", "300px");
+  // // Create a container for the articles
+  // var articleContainer = $("<div id='articleContainer'>");
+  // articleContainer.css("width", "300px");
 
-  // Append article container to body
-  $("body").append(articleContainer);
+  // // Append article container to body
+  // $("body").append(articleContainer);
 
   // Loop through the array of articles
   for (var i = 0; i < response.articles.length; i++) {
+<<<<<<< HEAD
     // Create div for article
+=======
+
+    // Create button for article
+>>>>>>> master
     var articleButton = $("<button class='article'>");
     articleButton.attr("href", response.articles[i].url);
 
-    // Append article div to article container
-    articleContainer.append(articleButton);
+    // Append article button to article container
+    $("#articleContainer").append(articleButton);
     articleButton.css("border-style", "solid");
 
     // Store article title in a variable
@@ -45,8 +55,10 @@ $.ajax({
     // Create an element to hold the image
     var image = $("<img>").attr("src", imgURL);
     image.css("height", "100px");
+    image.css("float", "bottom");
 
     // Append the image element to the title element
+    pTitle.append("<br>");
     pTitle.append(image);
   }
   $(document).on("click", "button", function(e) {
