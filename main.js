@@ -10,13 +10,8 @@ var queryURL =
 $.ajax({
   url: queryURL,
   method: "GET"
-<<<<<<< HEAD
 }).then(function(response) {
-  console.log(response);
-=======
-}).then(function (response) {
   // console.log(response);
->>>>>>> master
 
   // // Create a container for the articles
   // var articleContainer = $("<div id='articleContainer'>");
@@ -26,13 +21,8 @@ $.ajax({
   // $("body").append(articleContainer);
 
   // Loop through the array of articles
-  for (var i = 0; i < response.articles.length; i++) {
-<<<<<<< HEAD
-    // Create div for article
-=======
-
+  for (var i = 0; i < 10; i++) {
     // Create button for article
->>>>>>> master
     var articleButton = $("<button class='article'>");
     articleButton.attr("href", response.articles[i].url);
 
@@ -93,8 +83,11 @@ function getEventsInCity(city) {
     }
   }).then(function(response) {
     for (var i = 0; i < response._embedded.events.length; i++) {
-      var articleDiv = $("<button class='article'>");
+      var eventBtn = $("<button class='article'>");
       var title = response._embedded.events[i].name;
+
+      $("#eventscontainer").append(eventBtn);
+      // eventBtn.attr("href", response._embedded.events[i].url);
       var date = response._embedded.events[i].dates.start.localDate;
       var buyTicket = response._embedded.events[i].url;
       var pTitle = $("<p>").text(title);
@@ -109,15 +102,18 @@ function getEventsInCity(city) {
       pTitle.append("<br>");
       pTitle.append(date);
       pTitle.append("<br>");
-
       pTitle.append(image);
-      articleDiv.append(pTitle);
-      $("body").append(articleDiv);
+      eventBtn.append(pTitle);
     }
   });
 }
 
 //  Weather and Date
+
+/*
+setInterval(function() {
+  $(".weathercolumn").html(moment().format("h:mm:ss a"));
+}, 1000);*/
 
 const apiKey = "7bb4b8b4c54f73c9621bee4e6c4a3bf9";
 
@@ -152,7 +148,7 @@ function renderListItem(el) {
 }
 
 function renderCurrentItem(el) {
-  $("#current-city-weather").append(
+  $("#weather").append(
     "<h1>" +
       currentLocation.city +
       " (" +
@@ -161,12 +157,10 @@ function renderCurrentItem(el) {
       el.weather[0].icon +
       "@2x.png'></h1>"
   );
-  $("#current-city-weather").append(
+  $("#weather").append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
   );
-  $("#current-city-weather").append(
-    "<p>Humidity: " + el.main.humidity + "%</p>"
-  );
+  $("#weather").append("<p>Humidity: " + el.main.humidity + "%</p>");
 }
 
 function getForecast(currentLocation) {
