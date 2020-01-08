@@ -71,6 +71,28 @@ $.ajax({
     // This time, we do not end up here!
   }
 });
+/*
+function getEventsInCity(city) {
+  $.ajax({
+    type: "GET",
+    url:
+      "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=" +
+      city,
+    async: true,
+    dataType: "json",
+    success: function(json) {
+      console.log(json);
+      // Parse the response.
+      // Do other things.
+    },
+
+    error: function(xhr, status, err) {
+      console.log("error", status);
+      // This time, we do not end up here!
+    }
+  });
+}
+*/
 
 //  #######################################
 //  Weather and Date
