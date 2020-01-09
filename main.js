@@ -17,40 +17,42 @@ $.ajax({
 
   // Loop through the array of articles
   for (var i = 0; i < 10; i++) {
-    // Create button for article
-    var articleButton = $("<button class='article'>");
-    articleButton.attr("href", response.articles[i].url);
+    // // Create button for article
+    // var articleDiv = $("<div class='article'>");
+    // articleDiv.attr("href", response.articles[i].url);
 
-    // Append article button to article container
-    $("#articleContainer").append(articleButton);
-    articleButton.css("border-style", "solid");
-    articleButton.css("width", "100%");
-    articleButton.css("height", "auto");
+    // // Append article button to article container
+    // $("#articleContainer").append(articleDiv);
 
-    // Store article title in a variable
-    var title = response.articles[i].title;
+    // // Store article title in a variable
+    // var title = response.articles[i].title;
 
-    // Create an element to have the title displayed
-    pTitle = $("<p>").text(title);
+    // // Create an element to have the title displayed
+    // pTitle = $("<p>").text(title);
 
-    // Append title element to article div
-    articleButton.append(pTitle);
+    // // Append title element to article div
+    // articleButton.append(pTitle);
 
-    // Store article image URL in a variable
-    var imgURL = response.articles[i].urlToImage;
+    // // Store article image URL in a variable
+    // var imgURL = response.articles[i].urlToImage;
 
-    // Create an element to hold the image
-    var image = $("<img>").attr("src", imgURL);
+    // // Create an element to hold the image
+    // var image = $("<img>").attr("src", imgURL);
 
-    // Append the image element to the title element
-    pTitle.append("<br>");
-    pTitle.append(image);
+    // // Append the image element to the title element
+    // pTitle.append("<br>");
+    // pTitle.append(image);
+    var article = $("<div class='article'></div>");
+    article.append("<h5>" + response.articles[i].title + "</h5>");
+    article.append("<img src='" + response.articles[i].urlToImage + "'>");
+    article.append("<div><a href='" + response.articles[i].url + "'>Show More Info</a></div>");
+    $("#articleContainer").append(article);
   }
-  $(document).on("click", "button", function (e) {
-    e.preventDefault();
-    var url = $(this).attr("href");
-    window.open(url, "_blank");
-  });
+  // $(document).on("click", "button", function (e) {
+  //   e.preventDefault();
+  //   var url = $(this).attr("href");
+  //   window.open(url, "_blank");
+  // });
 });
 
 // ###################
@@ -59,7 +61,6 @@ $.ajax({
 
 // EVENTS JAVASCRIPT
 
-// Ticketmaster's API key utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
 function getEventsInCity(city) {
@@ -74,82 +75,44 @@ function getEventsInCity(city) {
     success: function (json) {
       console.log(json);
     },
-
     error: function (xhr, status, err) {
       console.log("error", status);
     }
   }).then(function (response) {
     for (var i = 0; i < response._embedded.events.length; i++) {
-      var eventBtn = $("<button class='article'>");
-      var title = response._embedded.events[i].name;
+      var event = $("<div class='event'></div>");
 
-      $("#eventscontainer").append(eventBtn);
-      // eventBtn.attr("href", response._embedded.events[i].url);
-      var date = response._embedded.events[i].dates.start.localDate;
-      var buyTicket = response._embedded.events[i].url;
-      var pTitle = $("<p>").text(title);
-      var link = $("<a>")
-        .text("Buy tickets")
-        .attr("href", buyTicket)
-        .attr("target", "_blank");
-      var imgURL = response._embedded.events[i].images[0].url;
-      var image = $("<img>").attr("src", imgURL);
-      image.css("height", "100px");
-      pTitle.append(link);
-      pTitle.append("<br>");
-      pTitle.append(date);
-      pTitle.append("<br>");
-      pTitle.append(image);
-      eventBtn.append(pTitle);
+      event.append("<h5>" + response._embedded.events[i].name + "</h5>");
+      event.append(
+        "<h6>" + response._embedded.events[i].dates.start.localDate + "</h6>"
+      );
+      event.append(
+        "<img src='" + response._embedded.events[i].images[0].url + "'>"
+      );
+      event.append(
+        "<div><a href='" +
+        response._embedded.events[i].url +
+        "'>Show More Info</a></div>"
+      );
+      $("#eventscontainer").append(event);
     }
   });
 }
 
 //  Weather and Date
 
-/*
-setInterval(function() {
-  $(".weathercolumn").html(moment().format("h:mm:ss a"));
-}, 1000);*/
+setInterval(function () {
+  $("#clock").html(moment().format("h:mm:ss a"));
+}, 1000);
 
 const apiKey = "7bb4b8b4c54f73c9621bee4e6c4a3bf9";
-
-function renderWeather(forecast) {
-  var j = 0;
-  $("#current-city-weather").html("");
-  $("#fivedayforecast").html("");
-  $.each(forecast, function (index, el) {
-    if (j) {
-      renderListItem(el);
-    } else {
-      renderCurrentItem(el);
-    }
-    j++;
-    console.log(el);
-  });
-}
-
-function renderListItem(el) {
-  var listItem = $("<div class='listItem'></div>");
-  listItem.append("<h3>" + moment.unix(el.dt).format("MM/DD/YYYY") + "</h3>");
-  listItem.append(
-    "<img width='32' src='http://openweathermap.org/img/wn/" +
-    el.weather[0].icon +
-    "@2x.png'>"
-  );
-  listItem.append(
-    "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
-  );
-  listItem.append("<p>Humidity: " + el.main.humidity + "%</p>");
-  $("#fivedayforecast").append(listItem);
-}
 
 function renderCurrentItem(el) {
   $("#weather").append(
     "<h1>" +
     currentLocation.city +
     " (" +
-    moment.unix(el.dt).format("MM/DD/YYYY") +
+    moment().format("MM/DD/YYYY") +
     ") <img width='32' src='http://openweathermap.org/img/wn/" +
     el.weather[0].icon +
     "@2x.png'></h1>"
@@ -162,7 +125,7 @@ function renderCurrentItem(el) {
 
 function getForecast(currentLocation) {
   var url =
-    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     currentLocation.city +
     ",US&appid=" +
     apiKey;
@@ -171,25 +134,11 @@ function getForecast(currentLocation) {
     jsonpCallback: "callback",
     dataType: "jsonp",
     success: function (forecast) {
-      var currentForecast = {};
-      console.log(forecast);
-      forecast.list.forEach(function (el) {
-        if (
-          currentForecast.hasOwnProperty(
-            moment.unix(el.dt).format("MM/DD/YYYY")
-          )
-        ) {
-          return 0;
-        }
-        //saving
-        currentForecast[moment.unix(el.dt).format("MM/DD/YYYY")] = el;
-      });
-      renderWeather(currentForecast);
+      renderCurrentItem(forecast);
     }
   });
 }
 
-//#################################################
 function getCurrentCityAndCountry() {
   $.ajax({
     url: "https://geolocation-db.com/jsonp",
@@ -199,11 +148,11 @@ function getCurrentCityAndCountry() {
       console.log(location);
       currentLocation = location;
       getForecast(location);
+      getEventsInCity(location.city);
     }
   });
 }
 
-//#################################################
 function convertKelvinToCelsius(kelvin) {
   if (kelvin < 0) {
     return "below absolute zero (0 K)";
@@ -304,3 +253,16 @@ savedToDos.append(saveButton);
 //   //save to storage as string
 //   localStorage.setItem("userInput", JSON.stringify(map));
 // });
+
+// Calendar
+$("#calendar").tuiCalendar({
+  defaultView: "month",
+  taskView: true,
+  template: {
+    monthDayname: function (dayname) {
+      return (
+        '<span class="calendar-week-dayname-name">' + dayname.label + "</span>"
+      );
+    }
+  }
+});
