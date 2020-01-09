@@ -41,3 +41,8 @@
   padding: 10px;
   margin: 10px;
 }
+
+#articleContainer .article {
+    background: rgb(240, 240, 240);
+    margin-bottom: 10px;
+  }
