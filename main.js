@@ -1,4 +1,6 @@
+// #####################
 // BEGIN NEWS JAVASCRIPT
+// #####################
 
 // Create variable to hold news API call
 var queryURL =
@@ -13,52 +15,51 @@ $.ajax({
 }).then(function(response) {
   // console.log(response);
 
-  // // Create a container for the articles
-  // var articleContainer = $("<div id='articleContainer'>");
-  // articleContainer.css("width", "300px");
-
-  // // Append article container to body
-  // $("body").append(articleContainer);
-
   // Loop through the array of articles
   for (var i = 0; i < 10; i++) {
-    // Create button for article
-    var articleButton = $("<button class='article'>");
-    articleButton.attr("href", response.articles[i].url);
+    // // Create button for article
+    // var articleDiv = $("<div class='article'>");
+    // articleDiv.attr("href", response.articles[i].url);
 
-    // Append article button to article container
-    $("#articleContainer").append(articleButton);
-    articleButton.css("border-style", "solid");
+    // // Append article button to article container
+    // $("#articleContainer").append(articleDiv);
 
-    // Store article title in a variable
-    var title = response.articles[i].title;
+    // // Store article title in a variable
+    // var title = response.articles[i].title;
 
-    // Create an element to have the title displayed
-    pTitle = $("<p>").text(title);
+    // // Create an element to have the title displayed
+    // pTitle = $("<p>").text(title);
 
-    // Append title element to article div
-    articleButton.append(pTitle);
+    // // Append title element to article div
+    // articleButton.append(pTitle);
 
-    // Store article image URL in a variable
-    var imgURL = response.articles[i].urlToImage;
+    // // Store article image URL in a variable
+    // var imgURL = response.articles[i].urlToImage;
 
-    // Create an element to hold the image
-    var image = $("<img>").attr("src", imgURL);
-    image.css("height", "100px");
-    image.css("float", "bottom");
+    // // Create an element to hold the image
+    // var image = $("<img>").attr("src", imgURL);
 
-    // Append the image element to the title element
-    pTitle.append("<br>");
-    pTitle.append(image);
+    // // Append the image element to the title element
+    // pTitle.append("<br>");
+    // pTitle.append(image);
+    var article = $("<div class='article'></div>");
+    article.append("<h5>" + response.articles[i].title + "</h5>");
+    article.append("<img src='" + response.articles[i].urlToImage + "'>");
+    article.append(
+      "<div><a href='" + response.articles[i].url + "'>Show More Info</a></div>"
+    );
+    $("#articleContainer").append(article);
   }
-  $(document).on("click", "button", function(e) {
-    e.preventDefault();
-    var url = $(this).attr("href");
-    window.open(url, "_blank");
-  });
+  // $(document).on("click", "button", function (e) {
+  //   e.preventDefault();
+  //   var url = $(this).attr("href");
+  //   window.open(url, "_blank");
+  // });
 });
 
-// END NEWS JAVASCRIPt
+// ###################
+// END NEWS JAVASCRIPT
+// ###################
 
 // EVENTS JAVASCRIPT
 
@@ -168,6 +169,89 @@ function convertKelvinToFarenheit(kelvin) {
 }
 
 getCurrentCityAndCountry();
+getEventsInCity("Austin");
+
+// ###################
+// BEGIN TO-DO LIST JS
+// ###################
+
+// Create a div to store saved to-do items
+var savedToDos = $("<div id='savedToDos'>");
+// Append saved to-do div to toDoColumn
+$("#toDoColumn").append(savedToDos);
+// Create a div for input box
+var inputBox = $("<input>");
+inputBox.css("width", "75%");
+// Append input box to savedToDos
+savedToDos.append(inputBox);
+// Create a save button for users to save their input
+var saveButton = $("<button>");
+saveButton.text("Save");
+// Append save button to inputBox
+savedToDos.append("<br>");
+savedToDos.append(saveButton);
+
+// // Create table for to-do list
+// var toDoTable = $("<table>");
+// // Append table to toDoColumn
+// $("#toDoColumn").append(toDoTable);
+
+// // Create loop to make table with 24 rows
+// for (var i = 0; i < 24; i++) {
+//   // Create table row
+//   var tableRow = $("<tr>");
+//   // Append table row to toDoTable
+//   toDoTable.append(tableRow);
+//   // Create time table header for toDoTable row
+//   var tableHeaderTime = $("<th class='time'>");
+//   tableHeaderTime.text(i + 1 + "am");
+//   if (i > 12) {
+//     tableHeaderTime.text(i + 1 + "pm");
+//   }
+//   // tableHeaderTime.text(moment('00:00 AM', 'hh:mm A').format('hh:mm A'));
+//   // Append time table header to toDoTable row
+//   tableRow.append(tableHeaderTime);
+//   // Create input table header for toDoTable row
+//   var tableHeaderInput = $("<th>");
+//   // Append input table header to toDoTable row
+//   tableRow.append(tableHeaderInput);
+//   // Create input box for input
+//   var inputBox = $("<input class='input'>");
+//   // Append input box to input table header
+//   tableHeaderInput.append(inputBox);
+//   // Create save table header for toDoTable row
+//   var tableHeaderSave = $("<th>");
+//   // Append save table header to toDoTable row
+//   tableRow.append(tableHeaderSave);
+//   // Create a button for save table header
+//   var saveButton = $("<button href=''>");
+//   saveButton.text("Save");
+//   // Append save button to save table header
+//   tableHeaderSave.append(saveButton);
+// };
+
+// // // Create save events
+// // $("button").on("click", function (event) {
+// //   // alert("Button Clicked!");
+// //   event.preventDefault();
+// //   var input = inputBox.val();
+// //   console.log(input);
+
+// //   localStorage.setItem("input", JSON.stringify(input));
+
+// // });
+
+// $("table button").click(function () {
+//   //Saving all fields at once
+//   var map = {};
+//   //foreach field
+//   $("#table input").each(function () {
+//     //find input attr and use it as key in json
+//     map[$(this).attr("input")] = $(this).val();
+//   });
+//   //save to storage as string
+//   localStorage.setItem("userInput", JSON.stringify(map));
+// });
 
 // Calendar
 $("#calendar").tuiCalendar({
