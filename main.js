@@ -186,7 +186,7 @@ init();
 
 function renderTodos() {
   // Clear todoList element
-  todoList.innerHTML = "";
+  todoList.empty();
 
   // Render a new li for each todo
   for (var i = 0; i < todos.length; i++) {
@@ -236,7 +236,7 @@ saveButton.on("click", function (event) {
 
   // Add new todoText to todos array, clear the input
   todos.push(todoText);
-  todoInput.value = "";
+  todoInput.val("");
 
   // Store updated todos in localStorage, re-render the list
   storeTodos();
@@ -257,6 +257,7 @@ todoList.on("click", function (event) {
     storeTodos();
     renderTodos();
   }
+
 });
 
 
