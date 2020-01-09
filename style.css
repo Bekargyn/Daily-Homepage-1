@@ -1,33 +1,43 @@
 .title {
-    text-align: center;
+  text-align: center;
 }
 .subtitle {
-    text-align: center;
+  text-align: center;
 }
 .columns {
-    margin-top: 100px;
-    text-align: center;
+  margin-top: 100px;
+  text-align: center;
 }
 .columns {
-        border: 15px solid black;
-        padding: 50px;
-        margin: 20px;
-        height: auto;
-        clear: both;
+  border: 15px solid black;
+  padding: 50px;
+  margin: 20px;
+  height: auto;
+  clear: both;
 }
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: turquoise;
-    color: white;
-    text-align: center;
-    padding: 1%;
- }
- .weathercolumn {
-     text-align: center;
-     border: 15px solid black;
-     padding: 50px;
-     margin: 20px;
- }
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #00d1b2;
+  color: white;
+  text-align: center;
+  padding: 1%;
+}
+.weathercolumn {
+  text-align: center;
+  border: 15px solid black;
+  padding: 50px;
+  margin: 20px;
+}
+
+#eventscontainer .event {
+  background: rgb(240, 240, 240);
+  margin-bottom: 10px;
+}
+
+#calendar {
+  padding: 10px;
+  margin: 10px;
+}
