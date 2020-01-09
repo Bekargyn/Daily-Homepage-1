@@ -31,3 +31,11 @@
      padding: 50px;
      margin: 20px;
  }
+ #toDoColumn {
+    padding: 0;
+ }
+ #toDoContainer {
+    margin: 0;
+    padding: 0;
+    border-width: thin;
+ }

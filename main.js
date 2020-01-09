@@ -10,15 +10,8 @@ var queryURL =
 $.ajax({
   url: queryURL,
   method: "GET"
-}).then(function(response) {
+}).then(function (response) {
   // console.log(response);
-
-  // // Create a container for the articles
-  // var articleContainer = $("<div id='articleContainer'>");
-  // articleContainer.css("width", "300px");
-
-  // // Append article container to body
-  // $("body").append(articleContainer);
 
   // Loop through the array of articles
   for (var i = 0; i < 10; i++) {
@@ -29,6 +22,8 @@ $.ajax({
     // Append article button to article container
     $("#articleContainer").append(articleButton);
     articleButton.css("border-style", "solid");
+    articleButton.css("width", "100%");
+    articleButton.css("height", "auto");
 
     // Store article title in a variable
     var title = response.articles[i].title;
@@ -44,14 +39,12 @@ $.ajax({
 
     // Create an element to hold the image
     var image = $("<img>").attr("src", imgURL);
-    image.css("height", "100px");
-    image.css("float", "bottom");
 
     // Append the image element to the title element
     pTitle.append("<br>");
     pTitle.append(image);
   }
-  $(document).on("click", "button", function(e) {
+  $(document).on("click", "button", function (e) {
     e.preventDefault();
     var url = $(this).attr("href");
     window.open(url, "_blank");
@@ -74,14 +67,14 @@ function getEventsInCity(city) {
       city,
     async: true,
     dataType: "json",
-    success: function(json) {
+    success: function (json) {
       console.log(json);
     },
 
-    error: function(xhr, status, err) {
+    error: function (xhr, status, err) {
       console.log("error", status);
     }
-  }).then(function(response) {
+  }).then(function (response) {
     for (var i = 0; i < response._embedded.events.length; i++) {
       var eventBtn = $("<button class='article'>");
       var title = response._embedded.events[i].name;
@@ -121,7 +114,7 @@ function renderWeather(forecast) {
   var j = 0;
   $("#current-city-weather").html("");
   $("#fivedayforecast").html("");
-  $.each(forecast, function(index, el) {
+  $.each(forecast, function (index, el) {
     if (j) {
       renderListItem(el);
     } else {
@@ -137,8 +130,8 @@ function renderListItem(el) {
   listItem.append("<h3>" + moment.unix(el.dt).format("MM/DD/YYYY") + "</h3>");
   listItem.append(
     "<img width='32' src='http://openweathermap.org/img/wn/" +
-      el.weather[0].icon +
-      "@2x.png'>"
+    el.weather[0].icon +
+    "@2x.png'>"
   );
   listItem.append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
@@ -150,12 +143,12 @@ function renderListItem(el) {
 function renderCurrentItem(el) {
   $("#weather").append(
     "<h1>" +
-      currentLocation.city +
-      " (" +
-      moment.unix(el.dt).format("MM/DD/YYYY") +
-      ") <img width='32' src='http://openweathermap.org/img/wn/" +
-      el.weather[0].icon +
-      "@2x.png'></h1>"
+    currentLocation.city +
+    " (" +
+    moment.unix(el.dt).format("MM/DD/YYYY") +
+    ") <img width='32' src='http://openweathermap.org/img/wn/" +
+    el.weather[0].icon +
+    "@2x.png'></h1>"
   );
   $("#weather").append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
@@ -173,10 +166,10 @@ function getForecast(currentLocation) {
     url: url,
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function(forecast) {
+    success: function (forecast) {
       var currentForecast = {};
       console.log(forecast);
-      forecast.list.forEach(function(el) {
+      forecast.list.forEach(function (el) {
         if (
           currentForecast.hasOwnProperty(
             moment.unix(el.dt).format("MM/DD/YYYY")
@@ -198,7 +191,7 @@ function getCurrentCityAndCountry() {
     url: "https://geolocation-db.com/jsonp",
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function(location) {
+    success: function (location) {
       console.log(location);
       currentLocation = location;
       getForecast(location);
