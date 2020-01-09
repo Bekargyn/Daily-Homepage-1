@@ -48,11 +48,42 @@
       </div>
     </section>
 
-    <div class="weathercolumn" id="weather">
+    <div class="columns">
+    
+    <div class="column is-one-third" id="weather">
       <div id="clock"></div>
       <h2><strong>Local weather</strong></h2>
     </div>
-    <div id="calendar" style="height: 500px;"></div>
+
+    <div class="column is-one-third" id="dropdown">
+      
+      
+      <aside class="menu">
+        <p class="menu-label">
+          General
+        </p>
+        <ul class="menu-list">
+          <li><a>Events</a></li>
+          <li><a>To-Do List</a></li>
+          <li><a>News</a></li>
+          <li>
+            <input type="text" placeholder="Search ..." id="event" />
+        <button id="searchevent" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+          </li>
+        </ul>
+      </aside>
+    
+    
+    </div>
+
+    <div class="column is-one-third" id="randombox">
+    </div>
+
+    </div>
+
+    <div id="calendar" style="height: 800px;"></div>
     <div class="columns">
       <div class="column is-one-third" id="eventscontainer">
         <strong>Events</strong>

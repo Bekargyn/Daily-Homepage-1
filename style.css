@@ -25,9 +25,8 @@
   text-align: center;
   padding: 1%;
 }
-.weathercolumn {
+#weather {
   text-align: center;
-  border: 15px solid black;
   padding: 50px;
   margin: 20px;
 }
@@ -40,4 +39,7 @@
 #calendar {
   padding: 10px;
   margin: 10px;
+}
+.menu {
+    margin-top: 50px;
 }
