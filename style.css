@@ -43,3 +43,8 @@
 .menu {
     margin-top: 50px;
 }
+
+#articleContainer .article {
+    background: rgb(240, 240, 240);
+    margin-bottom: 10px;
+  }
