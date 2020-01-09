@@ -1,4 +1,6 @@
+// #####################
 // BEGIN NEWS JAVASCRIPT
+// #####################
 
 // Create variable to hold news API call
 var queryURL =
@@ -51,7 +53,9 @@ $.ajax({
   });
 });
 
-// END NEWS JAVASCRIPt
+// ###################
+// END NEWS JAVASCRIPT
+// ###################
 
 // EVENTS JAVASCRIPT
 
@@ -216,9 +220,9 @@ function convertKelvinToFarenheit(kelvin) {
 getCurrentCityAndCountry();
 getEventsInCity("Austin");
 
-// 
+// ###################
 // BEGIN TO-DO LIST JS
-// 
+// ###################
 
 // Create table for to-do list
 var toDoTable = $("<table>");
@@ -232,8 +236,12 @@ for (var i = 0; i < 24; i++) {
   // Append table row to toDoTable
   toDoTable.append(tableRow);
   // Create time table header for toDoTable row
-  var tableHeaderTime = $("<th>");
-  tableHeaderTime.text(i + 1);
+  var tableHeaderTime = $("<th class='time'>");
+  tableHeaderTime.text(i + 1 + "am");
+  if (i > 12) {
+    tableHeaderTime.text(i + 1 + "pm");
+  }
+  // tableHeaderTime.text(moment('00:00 AM', 'hh:mm A').format('hh:mm A'));
   // Append time table header to toDoTable row
   tableRow.append(tableHeaderTime);
   // Create input table header for toDoTable row
@@ -241,7 +249,7 @@ for (var i = 0; i < 24; i++) {
   // Append input table header to toDoTable row
   tableRow.append(tableHeaderInput);
   // Create input box for input
-  var inputBox = $("<input>");
+  var inputBox = $("<input class='input'>");
   // Append input box to input table header
   tableHeaderInput.append(inputBox);
   // Create save table header for toDoTable row
@@ -249,19 +257,31 @@ for (var i = 0; i < 24; i++) {
   // Append save table header to toDoTable row
   tableRow.append(tableHeaderSave);
   // Create a button for save table header
-  var saveButton = $("<button>");
+  var saveButton = $("<button href=''>");
   saveButton.text("Save");
   // Append save button to save table header
   tableHeaderSave.append(saveButton);
 };
 
-// Create save events
-$("button").on("click", function (event) {
-  // alert("Button Clicked!");
-  event.preventDefault();
-  var input = $("input").val();
-  console.log(input);
+// // Create save events
+// $("button").on("click", function (event) {
+//   // alert("Button Clicked!");
+//   event.preventDefault();
+//   var input = inputBox.val();
+//   console.log(input);
 
-  localStorage.setItem("input", JSON.stringify(input));
+//   localStorage.setItem("input", JSON.stringify(input));
 
+// });
+
+$("table button").click(function () {
+  //Saving all fields at once
+  var map = {};
+  //foreach field
+  $("#table input").each(function () {
+    //find input attr and use it as key in json
+    map[$(this).attr("input")] = $(this).val();
+  });
+  //save to storage as string
+  localStorage.setItem("userInput", JSON.stringify(map));
 });
