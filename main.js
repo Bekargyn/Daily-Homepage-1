@@ -224,64 +224,83 @@ getEventsInCity("Austin");
 // BEGIN TO-DO LIST JS
 // ###################
 
-// Create table for to-do list
-var toDoTable = $("<table>");
-// Append table to toDoColumn
-$("#toDoColumn").append(toDoTable);
+// Create a div to store saved to-do items
+var savedToDos = $("<div id='savedToDos'>");
+// Append saved to-do div to toDoColumn
+$("#toDoColumn").append(savedToDos);
+// Create a div for input box
+var inputBox = $("<input>");
+inputBox.css("width", "75%");
+// Append input box to savedToDos
+savedToDos.append(inputBox);
+// Create a save button for users to save their input
+var saveButton = $("<button>");
+saveButton.text("Save");
+// Append save button to inputBox
+savedToDos.append("<br>");
+savedToDos.append(saveButton);
 
-// Create loop to make table with 24 rows
-for (var i = 0; i < 24; i++) {
-  // Create table row
-  var tableRow = $("<tr>");
-  // Append table row to toDoTable
-  toDoTable.append(tableRow);
-  // Create time table header for toDoTable row
-  var tableHeaderTime = $("<th class='time'>");
-  tableHeaderTime.text(i + 1 + "am");
-  if (i > 12) {
-    tableHeaderTime.text(i + 1 + "pm");
-  }
-  // tableHeaderTime.text(moment('00:00 AM', 'hh:mm A').format('hh:mm A'));
-  // Append time table header to toDoTable row
-  tableRow.append(tableHeaderTime);
-  // Create input table header for toDoTable row
-  var tableHeaderInput = $("<th>");
-  // Append input table header to toDoTable row
-  tableRow.append(tableHeaderInput);
-  // Create input box for input
-  var inputBox = $("<input class='input'>");
-  // Append input box to input table header
-  tableHeaderInput.append(inputBox);
-  // Create save table header for toDoTable row
-  var tableHeaderSave = $("<th>");
-  // Append save table header to toDoTable row
-  tableRow.append(tableHeaderSave);
-  // Create a button for save table header
-  var saveButton = $("<button href=''>");
-  saveButton.text("Save");
-  // Append save button to save table header
-  tableHeaderSave.append(saveButton);
-};
 
-// // Create save events
-// $("button").on("click", function (event) {
-//   // alert("Button Clicked!");
-//   event.preventDefault();
-//   var input = inputBox.val();
-//   console.log(input);
 
-//   localStorage.setItem("input", JSON.stringify(input));
 
+// // Create table for to-do list
+// var toDoTable = $("<table>");
+// // Append table to toDoColumn
+// $("#toDoColumn").append(toDoTable);
+
+// // Create loop to make table with 24 rows
+// for (var i = 0; i < 24; i++) {
+//   // Create table row
+//   var tableRow = $("<tr>");
+//   // Append table row to toDoTable
+//   toDoTable.append(tableRow);
+//   // Create time table header for toDoTable row
+//   var tableHeaderTime = $("<th class='time'>");
+//   tableHeaderTime.text(i + 1 + "am");
+//   if (i > 12) {
+//     tableHeaderTime.text(i + 1 + "pm");
+//   }
+//   // tableHeaderTime.text(moment('00:00 AM', 'hh:mm A').format('hh:mm A'));
+//   // Append time table header to toDoTable row
+//   tableRow.append(tableHeaderTime);
+//   // Create input table header for toDoTable row
+//   var tableHeaderInput = $("<th>");
+//   // Append input table header to toDoTable row
+//   tableRow.append(tableHeaderInput);
+//   // Create input box for input
+//   var inputBox = $("<input class='input'>");
+//   // Append input box to input table header
+//   tableHeaderInput.append(inputBox);
+//   // Create save table header for toDoTable row
+//   var tableHeaderSave = $("<th>");
+//   // Append save table header to toDoTable row
+//   tableRow.append(tableHeaderSave);
+//   // Create a button for save table header
+//   var saveButton = $("<button href=''>");
+//   saveButton.text("Save");
+//   // Append save button to save table header
+//   tableHeaderSave.append(saveButton);
+// };
+
+// // // Create save events
+// // $("button").on("click", function (event) {
+// //   // alert("Button Clicked!");
+// //   event.preventDefault();
+// //   var input = inputBox.val();
+// //   console.log(input);
+
+// //   localStorage.setItem("input", JSON.stringify(input));
+
+// // });
+
+// $("table button").click(function () {
+//   //Saving all fields at once
+//   var map = {};
+//   //foreach field
+//   $("#table input").each(function () {
+//     //find input attr and use it as key in json
+//     map[$(this).attr("input")] = $(this).val();
+//   });
+//   //save to storage as string
+//   localStorage.setItem("userInput", JSON.stringify(map));
 // });
-
-$("table button").click(function () {
-  //Saving all fields at once
-  var map = {};
-  //foreach field
-  $("#table input").each(function () {
-    //find input attr and use it as key in json
-    map[$(this).attr("input")] = $(this).val();
-  });
-  //save to storage as string
-  localStorage.setItem("userInput", JSON.stringify(map));
-});
