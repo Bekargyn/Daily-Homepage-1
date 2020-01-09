@@ -162,24 +162,6 @@ var todoList = $("<ul>");
 // Append list to saved to-do's div
 todoForm.append(todoList);
 
-// // Create click event for save button
-// saveButton.on("click", function (event) {
-//   event.preventDefault();
-//   var itemName = inputBox.val();
-//   var li = document.createElement("li");
-//   // Add remove button
-//   li.innerHTML = itemName + " <button>Remove</button>";
-//   // Append to-do item and remove button to list element
-//   toDoListEl.append(li);
-//   // Create localstorage setitem function
-//   localStorage.setItem("userInput", JSON.stringify(li));
-// });
-
-// var todoInput = document.querySelector("#todo-text");
-// var todoForm = document.querySelector("#todo-form");
-// var todoList = document.querySelector("#todo-list");
-// var todoCountSpan = document.querySelector("#todo-count");
-
 var todos = [];
 
 init();
@@ -259,7 +241,6 @@ todoList.on("click", function (event) {
   }
 
 });
-
 
 // ###################
 // END TO-DO LIST JS
