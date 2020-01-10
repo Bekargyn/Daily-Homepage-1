@@ -20,11 +20,16 @@ $.ajax({
     var article = $("<div class='article'></div>");
     article.append("<h5>" + response.articles[i].title + "</h5>");
     article.append("<img src='" + response.articles[i].urlToImage + "'>");
+<<<<<<< HEAD
     article.append(
       "<div><a target='_blank' href='" +
         response.articles[i].url +
         "'>Show More Info</a></div>"
     );
+=======
+    article.append("<div><a target='_blank' href='" + response.articles[i].url + "'>Show More Info</a></div>");
+
+>>>>>>> f69fc585b1419438cd4d98e077e5279092410bb4
     $("#articleContainer").append(article);
   }
 });
@@ -35,15 +40,26 @@ $.ajax({
 
 // EVENTS JAVASCRIPT
 
+var eventSearchParams = {
+  page: 0,
+  keyword: null,
+  size: 10,
+  city: ""
+};
+
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
-function getEventsInCity(city) {
-  console.log(city);
+function getEventsInCity() {
+  let url =
+    "https://app.ticketmaster.com/discovery/v2/events.json?apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
+  $.each(eventSearchParams, function(index, el) {
+    if (el) url += "&" + index + "=" + el;
+  });
+
+  console.log(url);
   $.ajax({
     type: "GET",
-    url:
-      "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=" +
-      city,
+    url: url,
     async: true,
     dataType: "json",
     success: function(json) {
@@ -72,6 +88,33 @@ function getEventsInCity(city) {
     }
   });
 }
+
+// Load more events button
+
+$("#more-events").click(function() {
+  eventSearchParams.page++;
+  getEventsInCity();
+});
+
+// Search Events by Keyword
+
+$("#searchByKeyword button").click(function() {
+  eventSearchParams.keyword = $("#searchByKeyword input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.city = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
+
+// Search Events by City
+
+$("#searchByCity button").click(function() {
+  eventSearchParams.city = $("#searchByCity input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.keyword = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
 
 //  Weather and Date
 
@@ -122,7 +165,8 @@ function getCurrentCityAndCountry() {
       console.log(location);
       currentLocation = location;
       getForecast(location);
-      getEventsInCity(location.city);
+      eventSearchParams.city = location.city;
+      getEventsInCity();
     }
   });
 }
@@ -158,6 +202,10 @@ todoForm.append(todoInput);
 // Create save button
 var saveButton = $("<button>");
 saveButton.text("Save");
+<<<<<<< HEAD
+=======
+
+>>>>>>> f69fc585b1419438cd4d98e077e5279092410bb4
 // Append save button
 todoForm.append(saveButton);
 // Create unordered list for saved to-do's
@@ -248,6 +296,7 @@ todoList.on("click", function(event) {
 // END TO-DO LIST JS
 // ###################
 
+<<<<<<< HEAD
 // Calendar
 $("#calendar").tuiCalendar({
   defaultView: "month",
@@ -260,3 +309,5 @@ $("#calendar").tuiCalendar({
     }
   }
 });
+=======
+>>>>>>> f69fc585b1419438cd4d98e077e5279092410bb4
