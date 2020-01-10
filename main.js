@@ -66,6 +66,9 @@ $.ajax({
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
 function getEventsInCity(city) {
+  // if (pageNumber == null) {
+  //   pageNumber = 0;
+  // }
   console.log(city);
   $.ajax({
     type: "GET",
