@@ -17,44 +17,13 @@ $.ajax({
 
   // Loop through the array of articles
   for (var i = 0; i < 10; i++) {
-    // // Create button for article
-    // var articleDiv = $("<div class='article'>");
-    // articleDiv.attr("href", response.articles[i].url);
-
-    // // Append article button to article container
-    // $("#articleContainer").append(articleDiv);
-
-    // // Store article title in a variable
-    // var title = response.articles[i].title;
-
-    // // Create an element to have the title displayed
-    // pTitle = $("<p>").text(title);
-
-    // // Append title element to article div
-    // articleButton.append(pTitle);
-
-    // // Store article image URL in a variable
-    // var imgURL = response.articles[i].urlToImage;
-
-    // // Create an element to hold the image
-    // var image = $("<img>").attr("src", imgURL);
-
-    // // Append the image element to the title element
-    // pTitle.append("<br>");
-    // pTitle.append(image);
     var article = $("<div class='article'></div>");
     article.append("<h5>" + response.articles[i].title + "</h5>");
     article.append("<img src='" + response.articles[i].urlToImage + "'>");
-    article.append(
-      "<div><a href='" + response.articles[i].url + "'>Show More Info</a></div>"
-    );
+    article.append("<div><a target='_blank' href='" + response.articles[i].url + "'>Show More Info</a></div>");
+
     $("#articleContainer").append(article);
   }
-  // $(document).on("click", "button", function (e) {
-  //   e.preventDefault();
-  //   var url = $(this).attr("href");
-  //   window.open(url, "_blank");
-  // });
 });
 
 // ###################
@@ -214,17 +183,106 @@ getCurrentCityAndCountry();
 // ###################
 
 // Create a div to store saved to-do items
-var savedToDos = $("<div id='savedToDos'>");
+var todoForm = $("<form id='todoForm'>");
 // Append saved to-do div to toDoColumn
-$("#toDoColumn").append(savedToDos);
+$("#toDoColumn").append(todoForm);
 // Create a div for input box
-var inputBox = $("<input>");
-inputBox.css("width", "75%");
-// Append input box to savedToDos
-savedToDos.append(inputBox);
-// Create a save button for users to save their input
+var todoInput = $("<input>");
+todoInput.css("width", "75%");
+// Append input box
+todoForm.append(todoInput);
+// Create save button
 var saveButton = $("<button>");
 saveButton.text("Save");
-// Append save button to inputBox
-savedToDos.append("<br>");
-savedToDos.append(saveButton);
+
+// Append save button
+todoForm.append(saveButton);
+// Create unordered list for saved to-do's
+var todoList = $("<ul>");
+// Append list to saved to-do's div
+todoForm.append(todoList);
+
+var todos = [];
+
+init();
+
+function renderTodos() {
+  // Clear todoList element
+  todoList.empty();
+
+  // Render a new li for each todo
+  for (var i = 0; i < todos.length; i++) {
+    var todo = todos[i];
+
+    var li = document.createElement("li");
+    li.textContent = todo;
+    li.setAttribute("data-index", i);
+
+    var button = document.createElement("button");
+    button.textContent = "Complete";
+
+    li.appendChild(button);
+    todoList.append(li);
+  }
+}
+
+function init() {
+  // Get stored todos from localStorage
+  // Parsing the JSON string to an object
+  var storedTodos = JSON.parse(localStorage.getItem("todos"));
+
+  // If todos were retrieved from localStorage, update the todos array to it
+  if (storedTodos !== null) {
+    todos = storedTodos;
+  }
+
+  // Render todos to the DOM
+  renderTodos();
+}
+
+function storeTodos() {
+  // Stringify and set "todos" key in localStorage to todos array
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+// When save button is clicked...
+saveButton.on("click", function (event) {
+  event.preventDefault();
+
+  var todoText = todoInput.val();
+
+  // Return from function early if submitted todoText is blank
+  if (todoText === "") {
+    return;
+  }
+
+  // Add new todoText to todos array, clear the input
+  todos.push(todoText);
+  todoInput.val("");
+
+  // Store updated todos in localStorage, re-render the list
+  storeTodos();
+  renderTodos();
+});
+
+// When a element inside of the todoList is clicked...
+todoList.on("click", function (event) {
+  var element = event.target;
+
+  // If that element is a button...
+  if (element.matches("button") === true) {
+    // Get its data-index value and remove the todo element from the list
+    var index = element.parentElement.getAttribute("data-index");
+    todos.splice(index, 1);
+
+    // Store updated todos in localStorage, re-render the list
+    storeTodos();
+    renderTodos();
+  }
+
+});
+
+// ###################
+// END TO-DO LIST JS
+// ###################
+
