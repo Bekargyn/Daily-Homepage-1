@@ -1,33 +1,39 @@
 .title {
   text-align: center;
+  color: white;
 }
+
 .subtitle {
   text-align: center;
 }
+
 .columns {
   margin-top: 100px;
   text-align: center;
 }
+
 .columns {
-  border: 15px solid black;
+  border: 2px solid gray;
   padding: 50px;
   margin: 20px;
   height: auto;
   clear: both;
 }
+
 .footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #00d1b2;
+  background-color: gray;
   color: white;
   text-align: center;
   padding: 1%;
 }
+
 .weathercolumn {
   text-align: center;
-  border: 15px solid black;
+  border: 2px solid gray;
   padding: 50px;
   margin: 20px;
 }
@@ -43,6 +49,15 @@
 }
 
 #articleContainer .article {
-    background: rgb(240, 240, 240);
-    margin-bottom: 10px;
-  }
+  background: rgb(240, 240, 240);
+  margin-bottom: 10px;
+}
+
+.header {
+  background: gray;
+  color: white;
+}
+
+.subtitle {
+  color: white;
+}
