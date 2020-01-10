@@ -12,7 +12,7 @@ var queryURL =
 $.ajax({
   url: queryURL,
   method: "GET"
-}).then(function (response) {
+}).then(function(response) {
   // console.log(response);
 
   // Loop through the array of articles
@@ -21,6 +21,7 @@ $.ajax({
     article.append("<h5>" + response.articles[i].title + "</h5>");
     article.append("<img src='" + response.articles[i].urlToImage + "'>");
     article.append("<div><a target='_blank' href='" + response.articles[i].url + "'>Show More Info</a></div>");
+
     $("#articleContainer").append(article);
   }
 });
@@ -31,24 +32,35 @@ $.ajax({
 
 // EVENTS JAVASCRIPT
 
+var eventSearchParams = {
+  page: 0,
+  keyword: null,
+  size: 10,
+  city: ""
+};
+
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
-function getEventsInCity(city) {
-  console.log(city);
+function getEventsInCity() {
+  let url =
+    "https://app.ticketmaster.com/discovery/v2/events.json?apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
+  $.each(eventSearchParams, function(index, el) {
+    if (el) url += "&" + index + "=" + el;
+  });
+
+  console.log(url);
   $.ajax({
     type: "GET",
-    url:
-      "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=" +
-      city,
+    url: url,
     async: true,
     dataType: "json",
-    success: function (json) {
+    success: function(json) {
       console.log(json);
     },
-    error: function (xhr, status, err) {
+    error: function(xhr, status, err) {
       console.log("error", status);
     }
-  }).then(function (response) {
+  }).then(function(response) {
     for (var i = 0; i < response._embedded.events.length; i++) {
       var event = $("<div class='event'></div>");
 
@@ -61,17 +73,44 @@ function getEventsInCity(city) {
       );
       event.append(
         "<div><a href='" +
-        response._embedded.events[i].url +
-        "'>Show More Info</a></div>"
+          response._embedded.events[i].url +
+          "'>Show More Info</a></div>"
       );
       $("#eventscontainer").append(event);
     }
   });
 }
 
+// Load more events button
+
+$("#more-events").click(function() {
+  eventSearchParams.page++;
+  getEventsInCity();
+});
+
+// Search Events by Keyword
+
+$("#searchByKeyword button").click(function() {
+  eventSearchParams.keyword = $("#searchByKeyword input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.city = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
+
+// Search Events by City
+
+$("#searchByCity button").click(function() {
+  eventSearchParams.city = $("#searchByCity input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.keyword = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
+
 //  Weather and Date
 
-setInterval(function () {
+setInterval(function() {
   $("#clock").html(moment().format("h:mm:ss a"));
 }, 1000);
 
@@ -80,12 +119,12 @@ const apiKey = "7bb4b8b4c54f73c9621bee4e6c4a3bf9";
 function renderCurrentItem(el) {
   $("#weather").append(
     "<h1>" +
-    currentLocation.city +
-    " (" +
-    moment().format("MM/DD/YYYY") +
-    ") <img width='32' src='http://openweathermap.org/img/wn/" +
-    el.weather[0].icon +
-    "@2x.png'></h1>"
+      currentLocation.city +
+      " (" +
+      moment().format("MM/DD/YYYY") +
+      ") <img width='32' src='http://openweathermap.org/img/wn/" +
+      el.weather[0].icon +
+      "@2x.png'></h1>"
   );
   $("#weather").append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
@@ -103,7 +142,7 @@ function getForecast(currentLocation) {
     url: url,
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function (forecast) {
+    success: function(forecast) {
       renderCurrentItem(forecast);
     }
   });
@@ -114,11 +153,12 @@ function getCurrentCityAndCountry() {
     url: "https://geolocation-db.com/jsonp",
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function (location) {
+    success: function(location) {
       console.log(location);
       currentLocation = location;
       getForecast(location);
-      getEventsInCity(location.city);
+      eventSearchParams.city = location.city;
+      getEventsInCity();
     }
   });
 }
@@ -137,7 +177,6 @@ function convertKelvinToFarenheit(kelvin) {
 }
 
 getCurrentCityAndCountry();
-getEventsInCity("Austin");
 
 // ###################
 // BEGIN TO-DO LIST JS
@@ -155,6 +194,7 @@ todoForm.append(todoInput);
 // Create save button
 var saveButton = $("<button>");
 saveButton.text("Save");
+
 // Append save button
 todoForm.append(saveButton);
 // Create unordered list for saved to-do's
@@ -246,16 +286,3 @@ todoList.on("click", function (event) {
 // END TO-DO LIST JS
 // ###################
 
-
-// Calendar
-$("#calendar").tuiCalendar({
-  defaultView: "month",
-  taskView: true,
-  template: {
-    monthDayname: function (dayname) {
-      return (
-        '<span class="calendar-week-dayname-name">' + dayname.label + "</span>"
-      );
-    }
-  }
-});
