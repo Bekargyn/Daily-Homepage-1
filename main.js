@@ -63,18 +63,26 @@ $.ajax({
 
 // EVENTS JAVASCRIPT
 
+var eventSearchParams = {
+  page: 0,
+  keyword: null,
+  size: 10,
+  city: ""
+};
+
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
-function getEventsInCity(city) {
-  // if (pageNumber == null) {
-  //   pageNumber = 0;
-  // }
-  console.log(city);
+function getEventsInCity() {
+  let url =
+    "https://app.ticketmaster.com/discovery/v2/events.json?apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
+  $.each(eventSearchParams, function(index, el) {
+    if (el) url += "&" + index + "=" + el;
+  });
+
+  console.log(url);
   $.ajax({
     type: "GET",
-    url:
-      "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=" +
-      city,
+    url: url,
     async: true,
     dataType: "json",
     success: function(json) {
@@ -103,6 +111,33 @@ function getEventsInCity(city) {
     }
   });
 }
+
+// Load more events button
+
+$("#more-events").click(function() {
+  eventSearchParams.page++;
+  getEventsInCity();
+});
+
+// Search Events by Keyword
+
+$("#searchByKeyword button").click(function() {
+  eventSearchParams.keyword = $("#searchByKeyword input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.city = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
+
+// Search Events by City
+
+$("#searchByCity button").click(function() {
+  eventSearchParams.city = $("#searchByCity input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.keyword = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
 
 //  Weather and Date
 
@@ -153,7 +188,8 @@ function getCurrentCityAndCountry() {
       console.log(location);
       currentLocation = location;
       getForecast(location);
-      getEventsInCity(location.city);
+      eventSearchParams.city = location.city;
+      getEventsInCity();
     }
   });
 }
@@ -172,7 +208,6 @@ function convertKelvinToFarenheit(kelvin) {
 }
 
 getCurrentCityAndCountry();
-getEventsInCity("Austin");
 
 // ###################
 // BEGIN TO-DO LIST JS
@@ -193,78 +228,3 @@ saveButton.text("Save");
 // Append save button to inputBox
 savedToDos.append("<br>");
 savedToDos.append(saveButton);
-
-// // Create table for to-do list
-// var toDoTable = $("<table>");
-// // Append table to toDoColumn
-// $("#toDoColumn").append(toDoTable);
-
-// // Create loop to make table with 24 rows
-// for (var i = 0; i < 24; i++) {
-//   // Create table row
-//   var tableRow = $("<tr>");
-//   // Append table row to toDoTable
-//   toDoTable.append(tableRow);
-//   // Create time table header for toDoTable row
-//   var tableHeaderTime = $("<th class='time'>");
-//   tableHeaderTime.text(i + 1 + "am");
-//   if (i > 12) {
-//     tableHeaderTime.text(i + 1 + "pm");
-//   }
-//   // tableHeaderTime.text(moment('00:00 AM', 'hh:mm A').format('hh:mm A'));
-//   // Append time table header to toDoTable row
-//   tableRow.append(tableHeaderTime);
-//   // Create input table header for toDoTable row
-//   var tableHeaderInput = $("<th>");
-//   // Append input table header to toDoTable row
-//   tableRow.append(tableHeaderInput);
-//   // Create input box for input
-//   var inputBox = $("<input class='input'>");
-//   // Append input box to input table header
-//   tableHeaderInput.append(inputBox);
-//   // Create save table header for toDoTable row
-//   var tableHeaderSave = $("<th>");
-//   // Append save table header to toDoTable row
-//   tableRow.append(tableHeaderSave);
-//   // Create a button for save table header
-//   var saveButton = $("<button href=''>");
-//   saveButton.text("Save");
-//   // Append save button to save table header
-//   tableHeaderSave.append(saveButton);
-// };
-
-// // // Create save events
-// // $("button").on("click", function (event) {
-// //   // alert("Button Clicked!");
-// //   event.preventDefault();
-// //   var input = inputBox.val();
-// //   console.log(input);
-
-// //   localStorage.setItem("input", JSON.stringify(input));
-
-// // });
-
-// $("table button").click(function () {
-//   //Saving all fields at once
-//   var map = {};
-//   //foreach field
-//   $("#table input").each(function () {
-//     //find input attr and use it as key in json
-//     map[$(this).attr("input")] = $(this).val();
-//   });
-//   //save to storage as string
-//   localStorage.setItem("userInput", JSON.stringify(map));
-// });
-
-// Calendar
-$("#calendar").tuiCalendar({
-  defaultView: "month",
-  taskView: true,
-  template: {
-    monthDayname: function(dayname) {
-      return (
-        '<span class="calendar-week-dayname-name">' + dayname.label + "</span>"
-      );
-    }
-  }
-});
