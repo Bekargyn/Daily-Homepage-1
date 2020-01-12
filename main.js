@@ -20,16 +20,12 @@ $.ajax({
     var article = $("<div class='article'></div>");
     article.append("<h5>" + response.articles[i].title + "</h5>");
     article.append("<img src='" + response.articles[i].urlToImage + "'>");
-<<<<<<< HEAD
     article.append(
       "<div><a target='_blank' href='" +
         response.articles[i].url +
         "'>Show More Info</a></div>"
     );
-=======
-    article.append("<div><a target='_blank' href='" + response.articles[i].url + "'>Show More Info</a></div>");
 
->>>>>>> f69fc585b1419438cd4d98e077e5279092410bb4
     $("#articleContainer").append(article);
   }
 });
@@ -80,7 +76,7 @@ function getEventsInCity() {
         "<img src='" + response._embedded.events[i].images[0].url + "'>"
       );
       event.append(
-        "<div><a href='" +
+        "<div><a target='_blank' href='" +
           response._embedded.events[i].url +
           "'>Show More Info</a></div>"
       );
@@ -202,10 +198,6 @@ todoForm.append(todoInput);
 // Create save button
 var saveButton = $("<button>");
 saveButton.text("Save");
-<<<<<<< HEAD
-=======
-
->>>>>>> f69fc585b1419438cd4d98e077e5279092410bb4
 // Append save button
 todoForm.append(saveButton);
 // Create unordered list for saved to-do's
@@ -295,19 +287,3 @@ todoList.on("click", function(event) {
 // ###################
 // END TO-DO LIST JS
 // ###################
-
-<<<<<<< HEAD
-// Calendar
-$("#calendar").tuiCalendar({
-  defaultView: "month",
-  taskView: true,
-  template: {
-    monthDayname: function(dayname) {
-      return (
-        '<span class="calendar-week-dayname-name">' + dayname.label + "</span>"
-      );
-    }
-  }
-});
-=======
->>>>>>> f69fc585b1419438cd4d98e077e5279092410bb4
