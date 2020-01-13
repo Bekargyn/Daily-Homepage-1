@@ -2,32 +2,51 @@
 // BEGIN NEWS JAVASCRIPT
 // #####################
 
-// Create variable to hold news API call
-var queryURL =
-  "https://newsapi.org/v2/top-headlines?" +
-  "country=us&" +
-  "apiKey=95e634b5d6494d2daacb34c392508b43";
+// Create variables to hold parameters of news API call
+var url = "https://newsapi.org/v2/top-headlines?";
+var countryCode = "country=us&";
+// var articleSearch = "q=trump&";
+var articleSearch = "";
+var articleApiKey = "apiKey=95e634b5d6494d2daacb34c392508b43";
+var queryURL = url + countryCode + articleSearch + articleApiKey;
 
-// Creating an AJAX call for news API
-$.ajax({
-  url: queryURL,
-  method: "GET"
-}).then(function (response) {
-  // console.log(response);
+// Create a function to perform AJAX request
+function getNews() {
+  // Creating an AJAX call for news API
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function (response) {
+    // console.log(response);
 
-  // Loop through the array of articles
-  for (var i = 0; i < 10; i++) {
-    var article = $("<div class='article'></div>");
-    article.append("<h5>" + response.articles[i].title + "</h5>");
-    article.append("<img src='" + response.articles[i].urlToImage + "'>");
-    article.append(
-      "<div><a target='_blank' href='" +
-      response.articles[i].url +
-      "'>Show More Info</a></div>"
-    );
+    // Loop through the array of articles
+    for (var i = 0; i < 10; i++) {
+      var article = $("<div class='article'></div>");
+      article.append("<h5>" + response.articles[i].title + "</h5>");
+      article.append("<img src='" + response.articles[i].urlToImage + "'>");
+      article.append(
+        "<div><a target='_blank' href='" +
+        response.articles[i].url +
+        "'>Show More Info</a></div>"
+      );
 
-    $("#articleContainer").append(article);
-  }
+      $("#articleContainer").append(article);
+    }
+  });
+};
+getNews();
+// Load more articles button
+$("#more-articles").click(function () {
+  eventSearchParams.page++;
+  getEventsInCity();
+});
+// Search for articles by keyword
+$("#articlesByKeyword button").click(function () {
+  var articleKeyword = $("#articlesByKeyword input").val();
+  articleSearch = "q=" + articleKeyword + "&";
+  queryURL = url + countryCode + articleSearch + articleApiKey;
+  $("#articleContainer").html("");
+  getNews();
 });
 
 // ###################
