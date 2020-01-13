@@ -2,28 +2,51 @@
 // BEGIN NEWS JAVASCRIPT
 // #####################
 
-// Create variable to hold news API call
-var queryURL =
-  "https://newsapi.org/v2/top-headlines?" +
-  "country=us&" +
-  "apiKey=95e634b5d6494d2daacb34c392508b43";
+// Create variables to hold parameters of news API call
+var url = "https://newsapi.org/v2/top-headlines?";
+var countryCode = "country=us&";
+// var articleSearch = "q=trump&";
+var articleSearch = "";
+var articleApiKey = "apiKey=95e634b5d6494d2daacb34c392508b43";
+var queryURL = url + countryCode + articleSearch + articleApiKey;
 
-// Creating an AJAX call for news API
-$.ajax({
-  url: queryURL,
-  method: "GET"
-}).then(function(response) {
-  // console.log(response);
+// Create a function to perform AJAX request
+function getNews() {
+  // Creating an AJAX call for news API
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function (response) {
+    console.log(response);
 
-  // Loop through the array of articles
-  for (var i = 0; i < 10; i++) {
-    var article = $("<div class='article'></div>");
-    article.append("<h5>" + response.articles[i].title + "</h5>");
-    article.append("<img src='" + response.articles[i].urlToImage + "'>");
-    article.append("<div><a target='_blank' href='" + response.articles[i].url + "'>Show More Info</a></div>");
+    // Loop through the array of articles
+    for (var i = 0; i < 10; i++) {
+      var article = $("<div class='article'></div>");
+      article.append("<h5>" + response.articles[i].title + "</h5>");
+      article.append("<img src='" + response.articles[i].urlToImage + "'>");
+      article.append(
+        "<div><a target='_blank' href='" +
+        response.articles[i].url +
+        "'>Show More Info</a></div>"
+      );
 
-    $("#articleContainer").append(article);
-  }
+      $("#articleContainer").append(article);
+    }
+  });
+};
+getNews();
+// Load more articles button
+$("#moreArticles").click(function () {
+  queryURL.page++;
+  getNews();
+});
+// Search for articles by keyword
+$("#articlesByKeyword button").click(function () {
+  var articleKeyword = $("#articlesByKeyword input").val();
+  articleSearch = "q=" + articleKeyword + "&";
+  queryURL = url + countryCode + articleSearch + articleApiKey;
+  $("#articleContainer").html("");
+  getNews();
 });
 
 // ###################
@@ -44,7 +67,7 @@ var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 function getEventsInCity() {
   let url =
     "https://app.ticketmaster.com/discovery/v2/events.json?apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
-  $.each(eventSearchParams, function(index, el) {
+  $.each(eventSearchParams, function (index, el) {
     if (el) url += "&" + index + "=" + el;
   });
 
@@ -54,13 +77,13 @@ function getEventsInCity() {
     url: url,
     async: true,
     dataType: "json",
-    success: function(json) {
+    success: function (json) {
       console.log(json);
     },
-    error: function(xhr, status, err) {
+    error: function (xhr, status, err) {
       console.log("error", status);
     }
-  }).then(function(response) {
+  }).then(function (response) {
     for (var i = 0; i < response._embedded.events.length; i++) {
       var event = $("<div class='event'></div>");
 
@@ -72,9 +95,9 @@ function getEventsInCity() {
         "<img src='" + response._embedded.events[i].images[0].url + "'>"
       );
       event.append(
-        "<div><a href='" +
-          response._embedded.events[i].url +
-          "'>Show More Info</a></div>"
+        "<div><a target='_blank' href='" +
+        response._embedded.events[i].url +
+        "'>Show More Info</a></div>"
       );
       $("#eventscontainer").append(event);
     }
@@ -83,14 +106,14 @@ function getEventsInCity() {
 
 // Load more events button
 
-$("#more-events").click(function() {
+$("#more-events").click(function () {
   eventSearchParams.page++;
   getEventsInCity();
 });
 
 // Search Events by Keyword
 
-$("#searchByKeyword button").click(function() {
+$("#searchByKeyword button").click(function () {
   eventSearchParams.keyword = $("#searchByKeyword input").val();
   eventSearchParams.page = 0;
   eventSearchParams.city = "";
@@ -100,7 +123,7 @@ $("#searchByKeyword button").click(function() {
 
 // Search Events by City
 
-$("#searchByCity button").click(function() {
+$("#searchByCity button").click(function () {
   eventSearchParams.city = $("#searchByCity input").val();
   eventSearchParams.page = 0;
   eventSearchParams.keyword = "";
@@ -110,7 +133,7 @@ $("#searchByCity button").click(function() {
 
 //  Weather and Date
 
-setInterval(function() {
+setInterval(function () {
   $("#clock").html(moment().format("h:mm:ss a"));
 }, 1000);
 
@@ -119,12 +142,12 @@ const apiKey = "7bb4b8b4c54f73c9621bee4e6c4a3bf9";
 function renderCurrentItem(el) {
   $("#weather").append(
     "<h1>" +
-      currentLocation.city +
-      " (" +
-      moment().format("MM/DD/YYYY") +
-      ") <img width='32' src='http://openweathermap.org/img/wn/" +
-      el.weather[0].icon +
-      "@2x.png'></h1>"
+    currentLocation.city +
+    " (" +
+    moment().format("MM/DD/YYYY") +
+    ") <img width='32' src='http://openweathermap.org/img/wn/" +
+    el.weather[0].icon +
+    "@2x.png'></h1>"
   );
   $("#weather").append(
     "<p>Temprature: " + convertKelvinToFarenheit(el.main.temp) + "F</p>"
@@ -142,7 +165,7 @@ function getForecast(currentLocation) {
     url: url,
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function(forecast) {
+    success: function (forecast) {
       renderCurrentItem(forecast);
     }
   });
@@ -153,7 +176,7 @@ function getCurrentCityAndCountry() {
     url: "https://geolocation-db.com/jsonp",
     jsonpCallback: "callback",
     dataType: "jsonp",
-    success: function(location) {
+    success: function (location) {
       console.log(location);
       currentLocation = location;
       getForecast(location);
@@ -194,7 +217,6 @@ todoForm.append(todoInput);
 // Create save button
 var saveButton = $("<button>");
 saveButton.text("Save");
-
 // Append save button
 todoForm.append(saveButton);
 // Create unordered list for saved to-do's
@@ -279,10 +301,8 @@ todoList.on("click", function (event) {
     storeTodos();
     renderTodos();
   }
-
 });
 
 // ###################
 // END TO-DO LIST JS
 // ###################
-
