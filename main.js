@@ -17,7 +17,7 @@ function getNews() {
     url: queryURL,
     method: "GET"
   }).then(function (response) {
-    // console.log(response);
+    console.log(response);
 
     // Loop through the array of articles
     for (var i = 0; i < 10; i++) {
@@ -36,9 +36,9 @@ function getNews() {
 };
 getNews();
 // Load more articles button
-$("#more-articles").click(function () {
-  eventSearchParams.page++;
-  getEventsInCity();
+$("#moreArticles").click(function () {
+  queryURL.page++;
+  getNews();
 });
 // Search for articles by keyword
 $("#articlesByKeyword button").click(function () {
