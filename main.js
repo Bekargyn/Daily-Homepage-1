@@ -20,7 +20,11 @@ $.ajax({
     var article = $("<div class='article'></div>");
     article.append("<h5>" + response.articles[i].title + "</h5>");
     article.append("<img src='" + response.articles[i].urlToImage + "'>");
-    article.append("<div><a target='_blank' href='" + response.articles[i].url + "'>Show More Info</a></div>");
+    article.append(
+      "<div><a target='_blank' href='" +
+        response.articles[i].url +
+        "'>Show More Info</a></div>"
+    );
 
     $("#articleContainer").append(article);
   }
@@ -72,7 +76,7 @@ function getEventsInCity() {
         "<img src='" + response._embedded.events[i].images[0].url + "'>"
       );
       event.append(
-        "<div><a href='" +
+        "<div><a target='_blank' href='" +
           response._embedded.events[i].url +
           "'>Show More Info</a></div>"
       );
@@ -194,7 +198,6 @@ todoForm.append(todoInput);
 // Create save button
 var saveButton = $("<button>");
 saveButton.text("Save");
-
 // Append save button
 todoForm.append(saveButton);
 // Create unordered list for saved to-do's
@@ -246,7 +249,7 @@ function storeTodos() {
 }
 
 // When save button is clicked...
-saveButton.on("click", function (event) {
+saveButton.on("click", function(event) {
   event.preventDefault();
 
   var todoText = todoInput.val();
@@ -266,7 +269,7 @@ saveButton.on("click", function (event) {
 });
 
 // When a element inside of the todoList is clicked...
-todoList.on("click", function (event) {
+todoList.on("click", function(event) {
   var element = event.target;
 
   // If that element is a button...
@@ -279,10 +282,8 @@ todoList.on("click", function (event) {
     storeTodos();
     renderTodos();
   }
-
 });
 
 // ###################
 // END TO-DO LIST JS
 // ###################
-
