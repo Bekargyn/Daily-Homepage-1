@@ -13,7 +13,7 @@ $.ajax({
   url: queryURL,
   method: "GET"
 }).then(function (response) {
-  // console.log(response);
+  console.log(response);
 
   // Loop through the array of articles
   for (var i = 0; i < 10; i++) {
