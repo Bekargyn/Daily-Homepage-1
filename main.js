@@ -13,14 +13,19 @@ $.ajax({
   url: queryURL,
   method: "GET"
 }).then(function (response) {
-  console.log(response);
+  // console.log(response);
 
   // Loop through the array of articles
   for (var i = 0; i < 10; i++) {
     var article = $("<div class='article'></div>");
     article.append("<h5>" + response.articles[i].title + "</h5>");
     article.append("<img src='" + response.articles[i].urlToImage + "'>");
-    article.append("<div><a target='_blank' href='" + response.articles[i].url + "'>Show More Info</a></div>");
+    article.append(
+      "<div><a target='_blank' href='" +
+      response.articles[i].url +
+      "'>Show More Info</a></div>"
+    );
+
     $("#articleContainer").append(article);
   }
 });
@@ -31,15 +36,26 @@ $.ajax({
 
 // EVENTS JAVASCRIPT
 
+var eventSearchParams = {
+  page: 0,
+  keyword: null,
+  size: 10,
+  city: ""
+};
+
 var ticketMasterApi = "utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
 
-function getEventsInCity(city) {
-  console.log(city);
+function getEventsInCity() {
+  let url =
+    "https://app.ticketmaster.com/discovery/v2/events.json?apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb";
+  $.each(eventSearchParams, function (index, el) {
+    if (el) url += "&" + index + "=" + el;
+  });
+
+  console.log(url);
   $.ajax({
     type: "GET",
-    url:
-      "https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=utNZSTGMX1zeTwLA5z5ppyXFAxACrTrb&city=" +
-      city,
+    url: url,
     async: true,
     dataType: "json",
     success: function (json) {
@@ -60,7 +76,7 @@ function getEventsInCity(city) {
         "<img src='" + response._embedded.events[i].images[0].url + "'>"
       );
       event.append(
-        "<div><a href='" +
+        "<div><a target='_blank' href='" +
         response._embedded.events[i].url +
         "'>Show More Info</a></div>"
       );
@@ -68,6 +84,33 @@ function getEventsInCity(city) {
     }
   });
 }
+
+// Load more events button
+
+$("#more-events").click(function () {
+  eventSearchParams.page++;
+  getEventsInCity();
+});
+
+// Search Events by Keyword
+
+$("#searchByKeyword button").click(function () {
+  eventSearchParams.keyword = $("#searchByKeyword input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.city = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
+
+// Search Events by City
+
+$("#searchByCity button").click(function () {
+  eventSearchParams.city = $("#searchByCity input").val();
+  eventSearchParams.page = 0;
+  eventSearchParams.keyword = "";
+  $("#eventscontainer").html("");
+  getEventsInCity();
+});
 
 //  Weather and Date
 
@@ -118,7 +161,8 @@ function getCurrentCityAndCountry() {
       console.log(location);
       currentLocation = location;
       getForecast(location);
-      getEventsInCity(location.city);
+      eventSearchParams.city = location.city;
+      getEventsInCity();
     }
   });
 }
@@ -137,7 +181,6 @@ function convertKelvinToFarenheit(kelvin) {
 }
 
 getCurrentCityAndCountry();
-getEventsInCity("Austin");
 
 // ###################
 // BEGIN TO-DO LIST JS
@@ -239,23 +282,8 @@ todoList.on("click", function (event) {
     storeTodos();
     renderTodos();
   }
-
 });
 
 // ###################
 // END TO-DO LIST JS
 // ###################
-
-
-// Calendar
-$("#calendar").tuiCalendar({
-  defaultView: "month",
-  taskView: true,
-  template: {
-    monthDayname: function (dayname) {
-      return (
-        '<span class="calendar-week-dayname-name">' + dayname.label + "</span>"
-      );
-    }
-  }
-});
