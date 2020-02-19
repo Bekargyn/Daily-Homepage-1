@@ -1,5 +1,7 @@
 # Project-1, Daily Homepage 
 
+The deployed site can be found here: https://jcw2865.github.io/Daily-Homepage/
+
 ## PROJECT DESCRIPTION
 
 The purpose of this website is to provide the user with their daily to-do list, news, weather, and local events. 
