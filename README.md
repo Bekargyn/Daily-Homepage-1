@@ -1,10 +1,10 @@
-# Project-1, Daily Homepage
+## DAILY HOMEPAGE
 
-The deployed site can be found here: https://bekargyn.github.io/Daily-Homepage-1/
+The purpose of this website is to provide the user with their daily to-do list, news, weather, and local events. Mobile responsive.
 
-## PROJECT DESCRIPTION
+## Link to deployed site (version):
 
-The purpose of this website is to provide the user with their daily to-do list, news, weather, and local events.
+https://bekargyn.github.io/Daily-Homepage-1/
 
 ## USER STORY
 
@@ -54,5 +54,4 @@ The third element is the weather element. The user won't necessarily engage with
 
 The fourth element is the to-do list. The user will be able to see an input box for each hour of the day. Users will be able to enter text into each input box and save it. This will allow users to add and remove tasks they may do on a daily basis.
 
-Please see the image below for a visual flow chart.
-![UserFlow](userflow.png)
+The University Of Texas At Austin, Coding Bootcamp 2020
