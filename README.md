@@ -14,9 +14,10 @@ I WANT to be able to quickly see important information about my day
 
 SO THAT I can keep up-to-date with current events and plan my day efficiently.
 
-## WIREFRAME
+## Deployed version looks like:
 
-![Wireframe](project1wireframe.png)
+<img src="images/deployed.png" width="100%" height="auto">
+<img src="images/deployed2.png" width="100%" height="auto">
 
 ## API'S TO BE USED
 
